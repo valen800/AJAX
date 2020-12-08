@@ -1,24 +1,48 @@
-var XMLHttpRequestObject = false;
+let XMLHttpRequestObject = false
 
-window.onload = function() {
-    if (window.XMLHttpRequest) {
-        XMLHttpRequestObject = new XMLHttpRequest();  
-    } else if (window.ActiveXObject) {
-        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    document.getElementById("change_Image").addEventListener("click", function() {
-        changeImage('img2.jpg','img')
-    })
+if (window.XMLHttpRequest){
+  XMLHttpRequestObject = new XMLHttpRequest()
+} else if (window.ActiveXObject) {
+  XMLHttpRequestObject = new ActiveXObject('Microsoft.XMLHTTP')
 }
 
-function loadHTMLDoc(file, idContent) {
+const content = document.getElementById('content')
 
-    xmlHttpRequesObject.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById(idContent).innerHTML = this.responseURL;
-        }
+const menuListener = () => {
+  event.preventDefault()
+  console.log(event.currentTarget)
+
+  const image = new Image()
+
+  if(XMLHttpRequestObject) {
+    // GET de la imagen que tengo en server.
+    // event.currentTarget.id se llama igual que la imagen que quiero.
+    XMLHttpRequestObject.open('GET', event.currentTarget.id + '.jpg')
+    // Indicamos que no queremos que sea una respuesta string, sino un binario.
+    /* MAS INFO: https://javascript.info/xmlhttprequest#response-type */
+    XMLHttpRequestObject.responseType = 'blob'
+
+    XMLHttpRequestObject.onreadystatechange = function () {
+
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200 ) {
+          
+        console.log(XMLHttpRequestObject)
+        // Guardando Binary data en una variable.
+        const blob = XMLHttpRequestObject.response
+        // createObjectURL es una funcion de js
+        /* https://developer.mozilla.org/es/docs/Web/API/URL/createObjectURL */
+        image.src = window.URL.createObjectURL(blob)
+
+        content.appendChild(image)
+
+      }
     }
-    xmlHttpRequesObject.open("GET", file, true);
-    xmlHttpRequesObject.send();
+
+    XMLHttpRequestObject.send(null)
+  }
+
 }
+
+Array.from(document.querySelectorAll('.menu > li > a')).forEach( menuItem => {
+    menuItem.addEventListener('click', menuListener)
+})

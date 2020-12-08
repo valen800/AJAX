@@ -1,0 +1,22 @@
+<companies>
+    <company>
+        <certification> Certified Best Employer 1</certification>
+        <employee> 5,0000 1</employee>
+        <industry> Risk Services 1</industry>
+        <html_url> http://www.google.com 1</html_url>
+    </company>
+
+    <company>
+        <certification> Certified Best Employer 2</certification>
+        <employee> 5,0000 2</employee>
+        <industry> Risk Services 2</industry>
+        <html_url> http://www.google.com 2</html_url>
+    </company>
+
+    <company>
+        <certification> Certified Best Employer 3</certification>
+        <employee> 5,0000 3</employee>
+        <industry> Risk Services 3</industry>
+        <html_url> http://www.google.com 3</html_url>
+    </company>
+</companies>
