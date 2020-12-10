@@ -6,7 +6,8 @@ if (window.XMLHttpRequest){
   XMLHttpRequestObject = new ActiveXObject('Microsoft.XMLHTTP')
 }
 
-const btn = document.getElementById("btn_js");
+const btn = document.getElementById("btn_css");
+const css = document.getElementById("css");
 
 const Listener = () => {
 
@@ -14,20 +15,15 @@ const Listener = () => {
     XMLHttpRequestObject.onreadystatechange = function () {
 
     if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200 ) {
-      loadJS(XMLHttpRequestObject)
-      console.log(XMLHttpRequestObject.responseText)
+      console.log(XMLHttpRequestObject.responseURL);
+      css.href = XMLHttpRequestObject.responseURL;
     }
   }
-    XMLHttpRequestObject.open('GET','codigo2.js', true)
+    XMLHttpRequestObject.open('GET','styles2.css', true)
     XMLHttpRequestObject.send()
   }
 
 }
 
-  const loadJS = (httpRequest) => {
-    //Eval ejecuta codigo js
-  return eval(httpRequest.responseText);
-  
-}
 ///////////////////////////////////////
 btn.addEventListener('click', Listener)

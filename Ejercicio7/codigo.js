@@ -6,7 +6,8 @@ if (window.XMLHttpRequest){
   XMLHttpRequestObject = new ActiveXObject('Microsoft.XMLHTTP')
 }
 
-const btn = document.getElementById("btn_js");
+const btn = document.getElementById("btn_php");
+const content = document.getElementById("content")
 
 const Listener = () => {
 
@@ -14,20 +15,14 @@ const Listener = () => {
     XMLHttpRequestObject.onreadystatechange = function () {
 
     if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200 ) {
-      loadJS(XMLHttpRequestObject)
-      console.log(XMLHttpRequestObject.responseText)
+      content.innerHTML = XMLHttpRequestObject.responseText
     }
   }
-    XMLHttpRequestObject.open('GET','codigo2.js', true)
+    XMLHttpRequestObject.open('GET','info.php', true)
     XMLHttpRequestObject.send()
   }
 
 }
 
-  const loadJS = (httpRequest) => {
-    //Eval ejecuta codigo js
-  return eval(httpRequest.responseText);
-  
-}
 ///////////////////////////////////////
 btn.addEventListener('click', Listener)
