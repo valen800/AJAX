@@ -27,3 +27,4 @@ const Listener = () => {
 
 ///////////////////////////////////////
 btn.addEventListener('click', Listener)
+/* https://uniwebsidad.com/libros/ajax/capitulo-7/aplicaciones-complejas */

@@ -30,3 +30,4 @@ const load = (httprequest) => {
 }
 
 btnXML.addEventListener('click', btnListener)
+/* https://uniwebsidad.com/libros/ajax/capitulo-7/aplicaciones-complejas */
