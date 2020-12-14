@@ -6,27 +6,42 @@ if (window.XMLHttpRequest){
   XMLHttpRequestObject = new ActiveXObject('Microsoft.XMLHTTP')
 }
 
-const btnXML = document.getElementById("btn");
+const btnSubmit = document.getElementById("btnSubmit")
+const inputEmail = document.getElementById("emailId")
 const content = document.getElementById("content")
 
-const btnListener = () => {
+const Listener = (url) => {
 
   if(XMLHttpRequestObject) {
     XMLHttpRequestObject.onreadystatechange = function () {
 
     if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200 ) {
-    
+      content.innerHTML = XMLHttpRequestObject.responseText
     }
   }
-    XMLHttpRequestObject.open('GET','', true)
+    console.log(url);
+    XMLHttpRequestObject.open("POST", url , true)
     XMLHttpRequestObject.send()
   }
 
 }
 
-const load = (httprequest) => {
-  var responseType = httprequest.responseText;
+const checkSubmit = (event) => {
+  let emailValue = inputEmail.value
+  let urlValue = "info.php" + "?" + "email=" + emailValue;
 
+  if (emailValue == "" || emailValue == null) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    } else {
+      event.returnValue = false;
+    }
+  } else {
+    Listener(urlValue);
+  }
 }
 
-btnXML.addEventListener('click', btnListener)
+//////
+btnSubmit.addEventListener("click", event => {
+  checkSubmit(event);
+})
