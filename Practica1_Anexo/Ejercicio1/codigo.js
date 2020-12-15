@@ -27,7 +27,6 @@ const btnListener = () => {
 const load = (httprequest) => {
   var response = httprequest.responseText;
   content.innerHTML = response;
-
 }
 
 btnXML.addEventListener('click', btnListener)
