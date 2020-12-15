@@ -39,3 +39,18 @@ const loadDocs = (httpRequest) => {
 }
 
 btn.addEventListener('click', btnListener)
+/* function procesarEventos()
+{
+  var resultados = document.getElementById("resultados");
+  if(conexion1.readyState == 4)
+  {
+    if (conexion1.status==200)
+      resultados.innerHTML = 'Gracias.';
+    else
+      alert(conexion1.statusText);
+  } 
+  else 
+  {
+    resultados.innerHTML = '<img src="../cargando.gif">';
+  }
+} */
