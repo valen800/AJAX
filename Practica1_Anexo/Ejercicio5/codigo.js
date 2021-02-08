@@ -1,33 +1,51 @@
-let XMLHttpRequestObject = false
+var XMLHttpRequestObject = false;
+var data = 'check_data.php';
+var content;
 
-if (window.XMLHttpRequest){
-  XMLHttpRequestObject = new XMLHttpRequest()
-} else if (window.ActiveXObject) {
-  XMLHttpRequestObject = new ActiveXObject('Microsoft.XMLHTTP')
+var inputName;
+var inputLastname;
+var inputAge;
+
+window.onload = function () {
+  if (window.XMLHttpRequest) {
+    XMLHttpRequestObject = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  content = document.getElementById('content');
+
+  inputName = document.getElementById('firstnameId');
+  inputLastname = document.getElementById('lastnameId');
+  inputAge = document.getElementById('ageId');
+
+  var button = document.getElementById('btnId');
+  button.addEventListener('click', getData);
 }
 
-const btnXML = document.getElementById("btn");
-const content = document.getElementById("content")
+function getData() {
+  if (XMLHttpRequestObject) {
+    XMLHttpRequestObject.open("POST", data);
 
-const btnListener = () => {
+    var params_xml = createJSON();
 
-  if(XMLHttpRequestObject) {
+    XMLHttpRequestObject.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
     XMLHttpRequestObject.onreadystatechange = function () {
-
-    if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200 ) {
-    
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+        content.innerHTML = XMLHttpRequestObject.responseText;
+          
+      }
     }
+    console.log(params_xml);
+    XMLHttpRequestObject.send("params="+params_xml);
   }
-    XMLHttpRequestObject.open('GET','', true)
-    XMLHttpRequestObject.send()
-  }
-
 }
 
-const load = (httprequest) => {
-  var responseType = httprequest.responseText;
+function createJSON() {
+  var json = '{ "params" : [' + 
+  '{ "name":"' + inputName.value + '", "lastname":"' + inputLastname.value + '", "age":"' + inputAge.value + '" }]}';
 
+  return json;
 }
 
-btnXML.addEventListener('click', btnListener)
-/* https://uniwebsidad.com/libros/ajax/capitulo-7/aplicaciones-complejas */
