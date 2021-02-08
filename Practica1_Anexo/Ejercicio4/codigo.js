@@ -1,53 +1,54 @@
-let XMLHttpRequestObject = false
+var XMLHttpRequestObject = false;
+var data = 'check_data.php';
+var content;
 
-if (window.XMLHttpRequest){
-  XMLHttpRequestObject = new XMLHttpRequest()
-} else if (window.ActiveXObject) {
-  XMLHttpRequestObject = new ActiveXObject('Microsoft.XMLHTTP')
+var inputName;
+var inputLastname;
+var inputAge;
+
+window.onload = function () {
+  if (window.XMLHttpRequest) {
+    XMLHttpRequestObject = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  content = document.getElementById('content');
+
+  inputName = document.getElementById('firstnameId');
+  inputLastname = document.getElementById('lastnameId');
+  inputAge = document.getElementById('ageId');
+
+  var button = document.getElementById('btnId');
+  button.addEventListener('click', getData);
 }
 
-const btnXML = document.getElementById("btn");
-const content = document.getElementById("content")
+function getData() {
+  if (XMLHttpRequestObject) {
+    XMLHttpRequestObject.open("POST", data);
 
-const btnListener = () => {
+    var params_xml = createXML();
 
-  if(XMLHttpRequestObject) {
+    XMLHttpRequestObject.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
     XMLHttpRequestObject.onreadystatechange = function () {
-
-      let parametersXML = createXML();
-      XMLHttpRequestObject.open('POST','check_data.php', true)
-      XMLHttpRequestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-      XMLHttpRequestObject.send(parametersXML)
-      
-    if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200 ) {
-      processReply(XMLHttpRequestObject)
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+        content.innerHTML = XMLHttpRequestObject.responseText;
+          
+      }
     }
+    console.log(params_xml);
+    XMLHttpRequestObject.send("params="+params_xml);
   }
-  }
-
 }
 
-const processReply = (httprequest) => {
-  let xml_document = httprequest.responseXML;
-  content.innerHTML = xml_document;
-}
-
-const createXML = () => {
-  let firstname = document.getElementById("firstnameId");
-  let lastname = document.getElementById("lastnameId");
-  let age = document.getElementById("ageId");
-
-  let xml = "<parametros>"
-
-  xml += "<firstname>" + firstname.value + "<\/firstname>"
-  xml += "<lastname>" + lastname.value + "<\/lastname>"
-  xml += "<firstname>" + age.value + "<\/firstname>"
-
-  xml += "<\/parametros>"
+function createXML() {
+  var xml = "<params>";
+  xml += "<name>"+inputName.value+"</name>";
+  xml += "<lastname>"+inputLastname.value+"</lastname>";
+  xml += "<age>"+inputAge.value+"</age>";
+  xml += "</params>";
 
   return xml;
-
 }
 
-btn.addEventListener('click', btnListener)
-/* https://uniwebsidad.com/libros/ajax/capitulo-7/aplicaciones-complejas */
